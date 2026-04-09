@@ -1,11 +1,11 @@
-# Jane Street Market Prediction Portfolio
+# Jane Street Market Prediction
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Tests](https://img.shields.io/badge/tests-pytest-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-portfolio%20ready-brightgreen)
 
-A portfolio-grade, end-to-end baseline for the **Jane Street Market Prediction** challenge, designed to demonstrate strong data science engineering practices:
+end-to-end baseline for the **Jane Street Market Prediction** challenge, designed to demonstrate strong data science engineering practices:
 
 - reproducible feature engineering
 - interpretable baseline modeling
