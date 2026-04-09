@@ -1,68 +1,61 @@
-# Jane Street Market Prediction — Production-Ready Portfolio
+# Jane Street Market Prediction Portfolio
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![API](https://img.shields.io/badge/API-FastAPI-009688)
 ![Tests](https://img.shields.io/badge/tests-pytest-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-deployable-brightgreen)
+![Status](https://img.shields.io/badge/status-portfolio%20ready-brightgreen)
 
-This repository now combines **research-grade modeling** with **deployment-grade engineering** for the Jane Street Market Prediction use case.
+A portfolio-grade, end-to-end baseline for the **Jane Street Market Prediction** challenge, designed to demonstrate strong data science engineering practices:
 
----
-
-## Why this project stands out
-
-- Notebook-first exploration preserved in `janestreet.ipynb`
-- Reusable Python package under `src/jane_street_portfolio`
-- Model service abstraction for training, saving, loading, and inference
-- FastAPI app with health checks and batch prediction endpoint
-- Containerized deployment path and CI pipeline
+- reproducible feature engineering
+- interpretable baseline modeling
+- test-first utility functions
+- clear project narrative for hiring managers and collaborators
 
 ---
 
-## System architecture
+## Project Highlights
+
+- **Competition context:** binary action prediction on anonymized financial features.
+- **Engineering focus:** clean Python modules extracted from experimental notebook workflows.
+- **Production habits:** requirements pinning, modular APIs, and pytest coverage.
+
+---
+
+## Workflow Architecture
 
 ```mermaid
-flowchart TD
-    A[CSV / Batch Market Data] --> B[Feature Matrix Builder]
-    B --> C[Model Service]
-    C --> D[Sklearn Pipeline: Imputer + Logistic Regression]
-    D --> E[Model Artifact (.joblib)]
-    E --> F[FastAPI Inference Service]
-    F --> G[/predict]
-    F --> H[/health]
+flowchart LR
+    A[Raw Market Data] --> B[Feature Matrix Builder]
+    B --> C[Median Imputation]
+    C --> D[Logistic Regression Baseline]
+    D --> E[Probability Scoring]
+    E --> F[Action Thresholding]
+    F --> G[Binary Trade Action]
+    G --> H[Evaluation & Iteration]
 ```
 
 ---
 
-## Repository layout
+## Repository Structure
 
 ```text
 .
-├── janestreet.ipynb
-├── requirements.txt
-├── Dockerfile
-├── Makefile
-├── .github/workflows/ci.yml
+├── janestreet.ipynb                    # Original exploration notebook
+├── requirements.txt                    # Runtime and testing dependencies
 ├── src/
 │   └── jane_street_portfolio/
-│       ├── __init__.py
-│       ├── api.py
-│       ├── cli.py
-│       ├── config.py
-│       ├── features.py
-│       ├── modeling.py
-│       └── service.py
+│       ├── __init__.py                 # Public package API
+│       ├── features.py                 # Feature selection + imputation
+│       └── modeling.py                 # Baseline training + action generation
 └── tests/
-    ├── test_api.py
-    ├── test_features.py
-    ├── test_modeling.py
-    └── test_service.py
+    ├── test_features.py                # Feature module tests
+    └── test_modeling.py                # Modeling module tests
 ```
 
 ---
 
-## Local development
+## Quickstart
 
 ```bash
 python -m venv .venv
@@ -74,55 +67,18 @@ pytest -q
 
 ---
 
-## Train and persist a model artifact
+## Why This Portfolio Project Works
 
-Assuming your CSV includes `feature_*` columns and a binary target column (`action` by default):
+This repository intentionally balances **research agility** (notebook exploration) with **software rigor** (typed, documented, and tested utilities). It can be expanded with:
 
-```bash
-export PYTHONPATH=src
-python -m jane_street_portfolio.cli train --data path/to/train.csv --target action --out artifacts/baseline_model.joblib
-```
-
----
-
-## Run API locally
-
-```bash
-export PYTHONPATH=src
-uvicorn jane_street_portfolio.api:app --host 0.0.0.0 --port 8000
-```
-
-Example requests:
-
-```bash
-curl http://localhost:8000/health
-
-curl -X POST http://localhost:8000/predict \
-  -H "Content-Type: application/json" \
-  -d '{"rows": [{"feature_0": 0.12, "feature_1": 1.4}, {"feature_0": 0.77, "feature_1": 1.8}]}'
-```
-
-> Load a previously trained artifact via `POST /load` before inference when starting a fresh service instance.
-
----
-
-## Docker deployment
-
-Build and run:
-
-```bash
-docker build -t jane-street-service:latest .
-docker run --rm -p 8000:8000 jane-street-service:latest
-```
-
----
-
-## CI pipeline
-
-GitHub Actions workflow runs on each push/PR to validate installation, lint-free import paths, and tests.
+1. time-aware cross-validation,
+2. utility-score optimization,
+3. model ensembles,
+4. experiment tracking (MLflow / Weights & Biases),
+5. deployment packaging for batch inference.
 
 ---
 
 ## License
 
-MIT License.
+MIT License. See `LICENSE` for details.
